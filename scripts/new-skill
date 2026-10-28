@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
+if [[ $# -ne 1 || ! $1 =~ ^[a-z0-9]+(-[a-z0-9]+)*$ || ${#1} -gt 64 ]]; then
+  echo 'Usage: scripts/new-skill <lowercase-name-with-hyphens> (64 characters max)' >&2; exit 2
+fi
+name=$1
+dest="$root/skills/$name"
+if [[ -e $dest || -L $dest ]]; then
+  echo "Already exists: $dest" >&2; exit 1
+fi
+mkdir "$dest"
+sed "s/{{name}}/$name/g" "$root/templates/skill/SKILL.md" > "$dest/SKILL.md"
+echo "Created $dest/SKILL.md. Edit its description and instructions, then run scripts/sync --link-only."

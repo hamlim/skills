@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
+cd "$root"
+if [[ ${1:-} == --help ]]; then
+  echo 'Usage: scripts/sync [--link-only]'
+  exit 0
+fi
+if [[ $# -gt 1 || ( $# -eq 1 && $1 != --link-only ) ]]; then
+  echo 'Usage: scripts/sync [--link-only]' >&2; exit 2
+fi
+if [[ ${1:-} != --link-only ]]; then
+  if git rev-parse --verify HEAD >/dev/null 2>&1 && git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' >/dev/null 2>&1; then
+    if [[ -n $(git status --porcelain) ]]; then
+      echo 'Working tree has changes. Commit or stash them before syncing.' >&2; exit 1
+    fi
+    git pull --ff-only
+  else
+    echo 'No upstream branch configured; linking local skills only.'
+  fi
+fi
+conflicts=0
+for dest in "${AGENTS_SKILLS_DIR:-$HOME/.agents/skills}" "${CODEX_SKILLS_DIR:-${CODEX_HOME:-$HOME/.codex}/skills}" "${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"; do
+  mkdir -p "$dest"
+  for skill in "$root"/skills/*; do
+    [[ -d $skill && -f $skill/SKILL.md ]] || continue
+    name=${skill##*/}
+    target="$dest/$name"
+    if [[ -L $target && $(readlink "$target") == "$skill" ]]; then
+      echo "Already linked: $target"
+    elif [[ -e $target || -L $target ]]; then
+      echo "Conflict, left unchanged: $target" >&2
+      conflicts=1
+    else
+      ln -s "$skill" "$target"
+      echo "Linked: $target"
+    fi
+  done
+done
+if (( conflicts )); then
+  echo 'Resolve the conflicts above and run sync again.' >&2
+  exit 1
+fi
