@@ -2,18 +2,6 @@
 
 A Git repository for skills shared by Codex and Claude Code. Each skill lives in `skills/<name>/` and has a `SKILL.md` file. Add supporting files inside that directory when needed.
 
-## First computer
-
-1. Create a private remote repository if these skills contain private information.
-2. Add the remote and push this repository:
-
-   ```sh
-   git remote add origin <remote-url>
-   git add .
-   git commit -m 'Set up shared skills'
-   git push -u origin main
-   ```
-
 ## Another computer
 
 ```sh
