@@ -15,7 +15,7 @@ Identify the PR from the request or current context. Get its current title, URL,
 repository name, and PR number from a reliable source. Ask for the PR if it cannot
 be identified. Use the live
 Everything schema to find the intended vault, pull request trait, properties, status,
-tag, and daily note. Search for an existing entry for the PR before creating one; if
+and daily note. Search for an existing entry for the PR before creating one; if
 one exists, report it instead of creating a duplicate.
 
 Use the current date and time in `America/New_York`, including its daylight saving
@@ -27,7 +27,10 @@ offset. Create the entry with:
 - Created set to the current Eastern date and time, in the format the property requires.
 - Day created linked to the daily note for the current Eastern date. Use the
   periodic-note capability to find or create that note if needed.
-- Status set to `in review` and the `work` tag applied.
+- Status set to `in review`.
+
+Apply tags only when the user requests them. Use the live Everything schema to
+find those tags. Do not apply a default tag.
 
 Use the actual property types and options returned by Everything; do not invent IDs
 or silently omit a requested property. If a required property or relationship is
