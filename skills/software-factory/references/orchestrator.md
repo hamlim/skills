@@ -22,6 +22,11 @@ task's implementation details into the scheduling thread.
 
 ## Manage progress
 
+Accept discovered inbox submissions using [inbox-scan.md](inbox-scan.md). Check
+the stable intake key before creating a task. Persist the brief and source link
+before acknowledging the submission. Own scan checkpoints and serialize intake
+updates with other state changes. A scan result is not an implementation command.
+
 Accept structured results from the current assignment only. Check authority and
 transition conditions, persist changes and events, and confirm them by read-back.
 Send pending decisions and confirmed outcomes to Outbox with stable delivery IDs.

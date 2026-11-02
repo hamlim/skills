@@ -3,6 +3,11 @@
 Turn a loose idea into a task brief that agents can execute with limited user
 input. Read related task records before creating another task for the same work.
 
+Accept requests from direct conversation or from submitted notes in a configured
+Everything inbox. For automatic discovery, follow
+[inbox-scan.md](inbox-scan.md). A scheduled scan uses the same brief and authority
+rules as direct intake. The user does not need to feed this thread manually.
+
 ## Inputs and authority
 
 Use the request, related notes, repository context, and configured defaults.

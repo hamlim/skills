@@ -9,6 +9,7 @@ property, trait, vault, or API exists. Keep credentials out of records and repor
 | Group | Fields |
 | --- | --- |
 | Identity | ID, title, source request, repository, repository task ID if required |
+| Intake | Source vault and note IDs, source revision or content hash, stable intake key, submission provenance, source-to-task link |
 | Brief | Objective, scope, exclusions, acceptance criteria with stable IDs, constraints, unresolved assumptions |
 | Authority | `work` or `personal`, classification source, target branch, allowed environments, explicit user authorizations |
 | State | Stage, waiting reason, outcome, revision, created and updated timestamps |
@@ -22,6 +23,20 @@ Each role run records its role, environment ID, thread link and ID, run or task 
 assignment generation, reviewed commit where applicable, status, and result link.
 Record model and provider selection when available. Do not assume identifiers
 are global across environments.
+
+## Inbox scan configuration
+
+Keep one factory configuration record with the source vault IDs, exact selection
+predicate, allowed submitters or integrations, repository and classification
+mapping, scan batch limit, pagination or checkpoint strategy, overlap policy,
+acknowledgement method, and Inbox and Orchestrator destinations. A trait and tags
+can define the predicate once their actual schema is discovered. Do not select
+notes merely because their title contains the word inbox.
+
+Record the configured schedule ID and interval only after setup is authorized
+and confirmed. The Orchestrator owns scan state: current scan ID, progress,
+pending intake actions, source-to-task mapping, and last durable checkpoint.
+See [inbox-scan.md](inbox-scan.md) for processing and recovery rules.
 
 Choose a finite retry limit when scheduling the task. A useful initial default is
 three correction cycles, with a recorded reason for any change. A transient
