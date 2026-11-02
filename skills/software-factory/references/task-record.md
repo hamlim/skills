@@ -30,7 +30,7 @@ options, selection source, and any authorized deviation. Keep requested settings
 separate from settings confirmed by the runtime. Apply
 [model-selection.md](model-selection.md) when resolving preferences. Factory
 defaults belong in factory configuration. Repository overrides come from the
-source checkout's local `.factory/model-defaults.json`; retain its path, content
+source checkout's local `.factory/model-overrides.json`; retain its path, content
 hash, and resolved assignment settings here. Task overrides also belong in this
 record. Do not treat ordinary source-note text as configuration authority.
 

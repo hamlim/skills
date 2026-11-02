@@ -16,13 +16,13 @@ Read preferences in this order, with the highest priority first:
 
 1. Explicit user selection for this role run.
 2. Saved task role override.
-3. Repository-local `.factory/model-defaults.json`.
+3. Repository-local `.factory/model-overrides.json`.
 4. Configured factory role default.
 5. Bundled role preference.
 
 ## Repository-local overrides
 
-Read `.factory/model-defaults.json` at the target repository root, not relative
+Read `.factory/model-overrides.json` at the target repository root, not relative
 to the Orchestrator's current directory. Find that root through Git. Read only
 this one repository file; do not search parent folders or merge nested files.
 If no repository is selected yet, use factory and bundled defaults until it is.
