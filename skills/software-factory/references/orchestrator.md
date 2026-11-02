@@ -11,9 +11,10 @@ task's implementation details into the scheduling thread.
 2. Select eligible queued work using recorded priorities, dependencies, capacity,
    and repository conflicts. Respect configured concurrency limits. If none are
    configured, begin with one active task cycle.
-3. Select a machine and model based on capabilities, availability, task context,
-   access, and allowed environments. Machine selection is deliberately flexible.
-   Do not assume that a registered machine has a repo, credentials, or tools.
+3. Select a machine based on capabilities, availability, task context, access,
+   and allowed environments. Resolve models and effort through
+   [model-selection.md](model-selection.md). Machine selection is deliberately
+   flexible. Do not assume a registered machine has a repo, credentials, or tools.
 4. Assign one Coordinator per task cycle. Record an assignment generation and
    pending dispatch action before launch. Pass the task ID, store location,
    authority, acceptance criteria, role, and result destination.

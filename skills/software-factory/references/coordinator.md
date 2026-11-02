@@ -15,7 +15,9 @@ Assign bounded implementation, review, and verification work. Each assignment
 names the task ID, generation, role reference, objective, criteria, constraints,
 environment, checkout or commit, required output, and result destination. Children
 do not inherit all relevant context automatically; provide the necessary brief.
-Select supported models and options through runtime capability discovery.
+Resolve each role's model and effort using [model-selection.md](model-selection.md).
+Validate the resolved selection against runtime capabilities on the target
+machine. Pass the selection explicitly and record the effective settings.
 
 Keep one implementation owner for a checkout. Reviewers and Verifiers must not
 silently edit that change. Use an independent run for review and verification;

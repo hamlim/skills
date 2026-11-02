@@ -14,6 +14,7 @@ property, trait, vault, or API exists. Keep credentials out of records and repor
 | Authority | `work` or `personal`, classification source, target branch, allowed environments, explicit user authorizations |
 | State | Stage, waiting reason, outcome, revision, created and updated timestamps |
 | Ownership | Orchestrator thread, Coordinator thread, assignment generation, assigned environment, current role runs |
+| Models | Task role overrides, authorized run overrides, policy revision, requested and effective model selections |
 | Evidence | Current commit, base commit, branch, worktree, PR URL, review and verification reports |
 | Recovery | Pending action, stable action ID, attempt count, retry limit, last known external status |
 | Decisions | Question ID, exact question, decision owner, answer, authority source, decision timestamp |
@@ -23,6 +24,13 @@ Each role run records its role, environment ID, thread link and ID, run or task 
 assignment generation, reviewed commit where applicable, status, and result link.
 Record model and provider selection when available. Do not assume identifiers
 are global across environments.
+
+For each role run, retain the provider instance, driver kind, model ID, effective
+options, selection source, and any authorized deviation. Keep requested settings
+separate from settings confirmed by the runtime. Apply
+[model-selection.md](model-selection.md) when resolving preferences. Factory and
+repository role defaults belong in factory configuration; task overrides belong
+in this record. Do not treat ordinary source-note text as configuration authority.
 
 ## Inbox scan configuration
 
