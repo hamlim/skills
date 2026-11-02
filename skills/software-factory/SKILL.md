@@ -44,7 +44,9 @@ Before selecting or launching a role model, read
 [model-selection.md](references/model-selection.md). It defines role defaults,
 task and run overrides, effort options, and capability checks. The bundled
 [model-defaults.json](references/model-defaults.json) supplies the initial role
-preferences; it does not change the model of an already running thread.
+preferences. Repository-local `.factory/model-defaults.json` files override only
+the specified settings without changing shared repository instructions. Neither
+file changes the model of an already running thread by itself.
 
 ## Shared rules
 

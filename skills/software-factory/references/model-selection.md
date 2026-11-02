@@ -16,9 +16,67 @@ Read preferences in this order, with the highest priority first:
 
 1. Explicit user selection for this role run.
 2. Saved task role override.
-3. Configured repository role default.
+3. Repository-local `.factory/model-defaults.json`.
 4. Configured factory role default.
 5. Bundled role preference.
+
+## Repository-local overrides
+
+Read `.factory/model-defaults.json` at the target repository root, not relative
+to the Orchestrator's current directory. Find that root through Git. Read only
+this one repository file; do not search parent folders or merge nested files.
+If no repository is selected yet, use factory and bundled defaults until it is.
+
+The file uses the bundled `version` and `roles` structure, but lists only the
+roles and fields that need changes. For example:
+
+```json
+{
+  "version": 1,
+  "roles": {
+    "implementer": {
+      "options": { "effort": "max" }
+    },
+    "reviewer": {
+      "options": { "reasoningEffort": "xhigh" }
+    }
+  }
+}
+```
+
+With the bundled policy, this keeps Opus 5.5 for implementation and Sol 6.1 for
+review. It changes only their effort. All other roles retain their defaults.
+Apply the merge rules below; a generic recursive JSON merge is not sufficient
+when changing models or selecting inheritance.
+
+Missing file means no repository override. Invalid JSON, unsupported versions,
+unknown roles or fields, and invalid selection combinations must produce a
+configuration error. Do not silently ignore a broken local preference. Resolve
+model availability and options using the current target environment catalog.
+
+### Keep it local
+
+Creating a `.factory` folder does not make it private or ignored. During local
+setup, add `/.factory/` to this repository's local Git exclude file, whose path
+is returned by `git rev-parse --git-path info/exclude`. Preserve existing entries
+and avoid adding the same pattern twice. Do not edit the shared `.gitignore` or
+`AGENTS.md` for personal model preferences.
+
+Verify the override is untracked and ignored before calling it local-only. Local
+excludes do not hide a tracked file. If it is already tracked, report that fact
+and resolve the intended setup rather than removing it from the index silently.
+Do not commit or include the local file in PRs. Keep credentials out of it.
+
+The file is local to its checkout and is not fetched with Git. For a new worktree
+or another execution machine, do not assume the file exists there. Resolve the
+policy from the user's selected source checkout at assignment time, record its
+path, content hash, and effective settings in the task, and pass those settings
+explicitly to role runs. They remain stable for that assignment. Do not replace
+them with destination-machine preferences during a transfer without a recorded
+policy change. Local setup on each independent source checkout remains explicit;
+do not copy or publish the file automatically.
+
+## Merge and authority rules
 
 The Orchestrator records policy changes and their source. The Coordinator can
 apply configured choices but cannot silently change policy, increase effort, or
