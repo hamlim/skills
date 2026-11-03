@@ -5,6 +5,8 @@ description: Run a software factory in T3 Code through manual or scheduled inbox
 
 # software-factory
 
+The software factory is named **Codswallop**.
+
 Take sufficiently defined tasks through implementation, review, verification,
 and authorized delivery. Resolve routine decisions without user input. Keep task
 state outside the conversation so another run can recover it.
@@ -44,7 +46,7 @@ Before selecting or launching a role model, read
 [model-selection.md](references/model-selection.md). It defines role defaults,
 task and run overrides, effort options, and capability checks. The bundled
 [model-defaults.json](references/model-defaults.json) supplies the initial role
-preferences. Repository-local `.factory/model-overrides.json` files override only
+preferences. Repository-local `.codswallop/model-overrides.json` files override only
 the specified settings without changing shared repository instructions. Neither
 file changes the model of an already running thread by itself.
 
