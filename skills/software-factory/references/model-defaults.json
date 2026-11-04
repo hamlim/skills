@@ -1,11 +1,6 @@
 {
   "version": 1,
   "roles": {
-    "inbox": {
-      "driverKind": "claudeAgent",
-      "model": "claude-sonnet-5-5",
-      "options": { "effort": "medium" }
-    },
     "orchestrator": { "mode": "inherit" },
     "coordinator": { "mode": "inherit" },
     "implementer": {
@@ -22,7 +17,6 @@
       "driverKind": "codex",
       "model": "gpt-6.1-sol",
       "options": { "reasoningEffort": "high" }
-    },
-    "outbox": { "mode": "inherit" }
+    }
   }
 }

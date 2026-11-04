@@ -2,7 +2,7 @@
 
 The Coordinator proposes task-cycle transitions. The Orchestrator checks the
 current record, authority, assignment generation, and evidence, then saves the
-transition and reads it back. The Outbox reports the saved result.
+transition and reads it back. The Orchestrator reports the saved result in its thread.
 
 ## Stages
 
@@ -62,7 +62,8 @@ override simply to complete a task. If checks are pending, use the runtime's
 supported watch or wakeup mechanism and save the pending delivery action.
 
 After merge, confirm the actual merged result. Opening a PR, enabling automatic
-merge, or requesting a merge is not proof that it merged. If a post-merge defect is
-found, create linked corrective work under the repository rules; do not silently
-rewrite the completed task's history. Outbox reporting is tracked separately so
-a notification failure cannot repeat delivery or merge.
+merge, or requesting a merge is not proof that it merged. If a post-merge defect
+is found, create linked corrective work under the repository rules; do not
+silently rewrite the completed task's history. Reporting in the Orchestrator
+thread is tracked separately so an interrupted report cannot repeat delivery or
+merge.

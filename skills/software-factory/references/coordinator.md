@@ -8,8 +8,8 @@ structured results.
 
 Read the current task, assignment generation, repository instructions, and prior
 evidence. Confirm the assignment is current. Check criteria for material gaps;
-investigate before asking for input. Return scope changes to Inbox through the
-Orchestrator. Do not weaken criteria to match an implementation.
+investigate before asking for input. Return scope changes to the Orchestrator
+for refinement with the user. Do not weaken criteria to match an implementation.
 
 Assign bounded implementation, review, and verification work. Each assignment
 names the task ID, generation, role reference, objective, criteria, constraints,
@@ -54,7 +54,8 @@ For work, deliver a draft unless further action is explicitly authorized. For
 personal work, complete the merge when conditions pass; otherwise retain the
 appropriate waiting state. Do not turn every personal task into a user approval.
 
-Return task ID, generation, final commit and PR, review and verification evidence,
-confirmed outcome, unresolved decisions, and the next action. Send this to the
-Orchestrator for persistence and Outbox delivery. Do not independently change the
-task's authoritative stage or claim ownership of another task.
+Return task ID, generation, final commit and PR, review and verification
+evidence, confirmed outcome, unresolved decisions, and the next action. Send
+this to the Orchestrator for persistence and reporting in its thread. Do not
+independently change the task's authoritative stage or claim ownership of
+another task.
