@@ -1,6 +1,6 @@
 ---
 name: software-factory
-description: Run a software factory in T3 Code through manual or scheduled inbox intake, scheduling, coordination, implementation, independent review, verification, and delivery. Use for factory role assignments and task cycles, not ordinary coding or PR work outside the factory.
+description: Run a software factory in T3 Code with an Orchestrator that receives requests, manages schedules, coordinates implementation, review and verification, and reports delivery. Use for factory role assignments and task cycles, not ordinary coding or PR work outside the factory.
 ---
 
 # software-factory
@@ -13,34 +13,33 @@ state outside the conversation so another run can recover it.
 
 ## Select a role
 
-For existing work, read the task record before acting. For a new request, have
-Inbox prepare a brief for the Orchestrator to record. Use the role assigned by
-the caller or stored in the record. If a factory request has no assigned role,
-use Inbox for a new idea or an inbox scan, and Orchestrator for scheduling or
-recovery. Do not assume control of an existing task that has another owner.
+For existing work, read the task record before acting. Use the role assigned by
+the caller or stored in the record. Use Orchestrator for factory requests without
+an assigned role, including new ideas, user replies, scheduling, and recovery.
+The user submits work and receives results in the Orchestrator thread. Do not
+create or use separate Inbox or Outbox roles or pinned threads. Do not assume
+control of an existing task that has another owner.
 
 Read [task-record.md](references/task-record.md) and
 [transitions.md](references/transitions.md), then only the relevant role reference:
 
 | Role | Read when | Responsibility |
 | --- | --- | --- |
-| [Inbox](references/inbox.md) | Receiving an idea, scanning submitted notes, or refining a brief | Define work sufficiently to schedule it |
-| [Orchestrator](references/orchestrator.md) | Managing the queue, capacity, or recovery | Own scheduling, assignment, and recorded transitions |
+| [Orchestrator](references/orchestrator.md) | Receiving requests, reporting results, or managing the factory | Define briefs; own schedules, assignments, state, and user decisions |
 | [Coordinator](references/coordinator.md) | Managing one task cycle | Direct work and decide its next action |
 | [Implementer](references/implementer.md) | Producing or correcting a change | Return code, tests, and a specific commit |
 | [Reviewer](references/reviewer.md) | Independently evaluating a change | Return findings against a specific commit |
 | [Verifier](references/verifier.md) | Checking acceptance criteria | Return observed behavior and acceptance evidence |
-| [Outbox](references/outbox.md) | Delivering results or pending questions | Report outcomes and collect user decisions |
 
-Roles are responsibilities, not seven permanent processes. Use separate role
+Roles are responsibilities, not five permanent processes. Use separate role
 threads when independent judgment or context is useful. Do not start extra agents
 for checks that a command can perform. This skill authorizes task-scoped role
 delegation within the user's existing scope; it does not authorize unrelated work.
 
 For a scheduled scan of an Everything inbox, also read
-[inbox-scan.md](references/inbox-scan.md). Scanning is an Inbox operating mode,
-not a new role. The scan discovers submissions; the Orchestrator still owns task
-creation, deduplication, acknowledgement, and scheduling.
+[inbox-scan.md](references/inbox-scan.md). Scanning is an optional Orchestrator
+mode. Direct conversation is the normal intake path. The Orchestrator owns scan
+configuration, task creation, duplicate checks, acknowledgement, and scheduling.
 
 Before selecting or launching a role model, read
 [model-selection.md](references/model-selection.md). It defines role defaults,
@@ -60,7 +59,8 @@ file changes the model of an already running thread by itself.
   conflict protection, notifications, or atomic updates without verification.
 - The Orchestrator is the only writer of task ownership, stage, waiting state,
   and outcome. Other roles return structured results to it through the
-  Coordinator when one is assigned, or directly for intake and delivery. Do not
+  Coordinator when one is assigned, or directly otherwise. The Orchestrator
+  records intake and reports results in its own thread. Do not
   infer a saved transition from a chat message.
 - Record facts and evidence separately from plans and assumptions. A completed
   model turn is not proof of completed work. Inspect actual Git, PR, and check

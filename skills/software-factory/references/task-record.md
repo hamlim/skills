@@ -9,7 +9,7 @@ property, trait, vault, or API exists. Keep credentials out of records and repor
 | Group | Fields |
 | --- | --- |
 | Identity | ID, title, source request, repository, repository task ID if required |
-| Intake | Source vault and note IDs, source revision or content hash, stable intake key, submission provenance, source-to-task link |
+| Intake | Source thread and message identity for direct requests; optional source vault and note IDs, source revision or content hash, stable intake key, submission provenance, source-to-task link |
 | Brief | Objective, scope, exclusions, acceptance criteria with stable IDs, constraints, unresolved assumptions |
 | Authority | `work` or `personal`, classification source, target branch, allowed environments, explicit user authorizations |
 | State | Stage, waiting reason, outcome, revision, created and updated timestamps |
@@ -18,7 +18,7 @@ property, trait, vault, or API exists. Keep credentials out of records and repor
 | Evidence | Current commit, base commit, branch, worktree, PR URL, review and verification reports |
 | Recovery | Pending action, stable action ID, attempt count, retry limit, last known external status |
 | Decisions | Question ID, exact question, decision owner, answer, authority source, decision timestamp |
-| Delivery | Delivery event ID, reported revision, destination thread, delivery status |
+| Reporting | Report event ID, reported revision, Orchestrator thread, report status |
 
 Each role run records its role, environment ID, thread link and ID, run or task ID,
 assignment generation, reviewed commit where applicable, status, and result link.
@@ -34,12 +34,20 @@ source checkout's local `.codswallop/model-overrides.json`; retain its path, con
 hash, and resolved assignment settings here. Task overrides also belong in this
 record. Do not treat ordinary source-note text as configuration authority.
 
-## Inbox scan configuration
+## Factory schedules
+
+The Orchestrator owns schedule configuration and runtime changes. Store each
+schedule's ID, purpose, timing and timezone, enabled state, next run, bounded
+prompt, Orchestrator destination, and last confirmed runtime state. Record setup
+authority and pending changes. Reconcile an uncertain mutation before retrying.
+Do not record a planned schedule as active before runtime confirmation.
+
+## Optional Everything scan configuration
 
 Keep one factory configuration record with the source vault IDs, exact selection
 predicate, allowed submitters or integrations, repository and classification
 mapping, scan batch limit, pagination or checkpoint strategy, overlap policy,
-acknowledgement method, and Inbox and Orchestrator destinations. A trait and tags
+acknowledgement method, and Orchestrator destination. A trait and tags
 can define the predicate once their actual schema is discovered. Do not select
 notes merely because their title contains the word inbox.
 

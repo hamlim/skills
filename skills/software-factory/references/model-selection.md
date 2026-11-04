@@ -1,11 +1,12 @@
 # Role models and effort
 
 Use [model-defaults.json](model-defaults.json) as the initial preference policy.
-Inbox uses Sonnet 5.5 with medium effort. Implementer uses Opus 5.5 with high
-effort. Reviewer and Verifier use Sol 6.1 with high reasoning effort. These effort
-settings are initial factory choices, not claims about the providers' defaults.
-Orchestrator, Coordinator, and Outbox inherit their parent selection unless
-configured otherwise. A scheduled inbox scan uses the Inbox preference too.
+Implementer uses Opus 5.5 with high effort. Reviewer and Verifier use Sol 6.1
+with high reasoning effort. These effort settings are initial factory choices,
+not claims about the providers' defaults. Orchestrator and Coordinator inherit
+their parent selection unless configured otherwise. Intake, scans, scheduling,
+and reports use the Orchestrator selection. There are no separate Inbox or
+Outbox model selections.
 
 These are configuration preferences. This file does not configure live threads,
 create schedules, reserve models, or guarantee availability on another machine.
@@ -51,7 +52,10 @@ when changing models or selecting inheritance.
 
 Missing file means no repository override. Invalid JSON, unsupported versions,
 unknown roles or fields, and invalid selection combinations must produce a
-configuration error. Do not silently ignore a broken local preference. Resolve
+configuration error. Old `inbox` and `outbox` entries must be removed during
+configuration migration. Do not merge their settings into `orchestrator` silently;
+retain its selection unless the user requests a change. Do not silently ignore a
+broken local preference. Resolve
 model availability and options using the current target environment catalog.
 
 ### Keep it local
@@ -147,6 +151,6 @@ A task override for Reviewer with `options: { reasoningEffort: "xhigh" }` keeps
 Sol 6.1 unless a higher-priority preference selects another model. Record it in
 the task and apply it to subsequent review runs for that task.
 
-A factory default for Outbox with Sonnet 5.5 and `effort: low` replaces inheritance
-for future Outbox runs. It does not reconfigure the existing Outbox thread until
-the runtime change is applied and read back.
+A factory default for Orchestrator replaces inheritance for future Orchestrator
+runs. It does not reconfigure the existing thread until the runtime change is
+applied and read back.
