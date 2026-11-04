@@ -29,9 +29,6 @@ offset. Create the entry with:
   periodic-note capability to find or create that note if needed.
 - Status set to `in review`.
 
-Apply tags only when the user requests them. Use the live Everything schema to
-find those tags. Do not apply a default tag.
-
 Use the actual property types and options returned by Everything; do not invent IDs
 or silently omit a requested property. If a required property or relationship is
 not supported, stop before creating the entry and explain the limitation. If a
